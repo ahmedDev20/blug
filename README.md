@@ -16,7 +16,7 @@
 
 ### Login page
 
-<img src="https://i.ibb.co/58hWqFW/Login.png" alt="Login" border="0">
+<img src="https://i.ibb.co/ngrTsm3/Welcome-Blug.png" alt="Welcome-Blug" border="0">
 
 ### Post page
 
