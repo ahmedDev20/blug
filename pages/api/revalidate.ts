@@ -5,14 +5,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ message: 'Invalid token' });
   }
 
-  const path = req.body?.record?.post_slug || req.body?.old_record?.post_slug;
-  console.log(`Purging cache for ${path}`);
-
-  if (!path) {
-    return res.status(422).json({ message: 'Invalid request body' });
-  }
-
   try {
+    await res.revalidate(`/`);
+
+    const path = req.body?.record?.post_slug || req.body?.old_record?.post_slug;
+
+    if (!path) return res.status(422).json({ message: 'Invalid request body' });
+
     await res.revalidate(`/posts/${path}`);
 
     return res.json({ revalidated: true });
