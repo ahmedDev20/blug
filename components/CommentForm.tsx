@@ -56,6 +56,8 @@ const CommentForm: FC<Props> = ({ post }) => {
     }
   };
 
+  if (!user) return null;
+
   return (
     <>
       <hr className="max-w-md md:max-w-lg my-10 mx-auto border-yellow-500" />
@@ -86,8 +88,6 @@ const CommentForm: FC<Props> = ({ post }) => {
         >
           {submitted ? <Loading label="Submitting..." /> : 'Submit'}
         </button>
-
-        <Toaster />
       </form>
     </>
   );

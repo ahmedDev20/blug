@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IPost } from '../lib/models';
+import { IComment, IPost } from '../lib/models';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -15,7 +15,7 @@ const Comments: FC<Props> = ({ post }) => {
           <h3 className="text-4xl pb-2">Comments</h3>
 
           <div className="mt-2 space-y-6">
-            {post.comments.map(comment => (
+            {post.comments.map((comment: IComment) => (
               <div key={comment.id} className="bg-white border rounded shadow py-3 px-5 dark:bg-transparent">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center space-x-3">

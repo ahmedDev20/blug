@@ -2,14 +2,14 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-import { IPost } from '../../lib/models';
+import { IComment, IPost } from '../../lib/models';
 import supabase from '../../lib/supabase';
 import Post from '../../components/Post';
-import { useUser } from '@supabase/auth-helpers-react';
+import { Toaster } from 'react-hot-toast';
+import CommentForm from '../../components/CommentForm';
+import Comments from '../../components/Comments';
 
 const Reactions = dynamic(() => import('../../components/Reactions'), { ssr: false });
-const CommentForm = dynamic(() => import('../../components/CommentForm'), { ssr: false });
-const Comments = dynamic(() => import('../../components/Comments'), { ssr: false });
 
 interface Props {
   post: IPost;
@@ -17,7 +17,6 @@ interface Props {
 
 const PostPage: NextPage<Props> = ({ post }) => {
   const title = `${post.title} - Blog`;
-  const user = useUser();
 
   return (
     <>
@@ -31,11 +30,13 @@ const PostPage: NextPage<Props> = ({ post }) => {
         <div>
           <Post post={post} />
 
-          {user && <CommentForm post={post} />}
+          <CommentForm post={post} />
 
           <Comments post={post} />
         </div>
       </section>
+
+      <Toaster position="bottom-right" />
     </>
   );
 };
@@ -43,7 +44,7 @@ const PostPage: NextPage<Props> = ({ post }) => {
 export default PostPage;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { data: post, error } = await supabase
+  const { data, error } = await supabase
     .from('posts')
     .select('*, tags:posts_tags(tags(*)), author:authors(*), comments(*), likes(*), bookmarks(*)')
     .eq('slug', params?.slug)
@@ -56,7 +57,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
 
+  const post = data as IPost;
+
   post.tags = post.tags.map((e: any) => e.tags);
+  post.comments = post.comments.sort((a: IComment, b: IComment) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
   return {
     props: {

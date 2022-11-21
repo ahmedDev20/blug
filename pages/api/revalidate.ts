@@ -6,6 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const path = req.body?.record?.post_slug || req.body?.old_record?.post_slug;
+  console.log(`Purging cache for ${path}`);
 
   if (!path) {
     return res.status(422).json({ message: 'Invalid request body' });

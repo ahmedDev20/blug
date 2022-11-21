@@ -1,3 +1,5 @@
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import toast, { Toaster } from 'react-hot-toast';
@@ -5,8 +7,6 @@ import supabase, { COVERS_BUCKET_ID } from '../../lib/supabase';
 import Image from 'next/image';
 import Head from 'next/head';
 import { GetServerSideProps, NextPage } from 'next';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
@@ -17,83 +17,6 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false, loading: () => <Loading label="Loading editor..." color="purple" /> });
 
-const FALLBACK_COVER = 'https://bitsofco.de/content/images/2018/12/broken-1.png';
-
-const dummyMarkdown = `
-# Tu miscuit aetas
-
-## Aegides media celeres
-
-Lorem markdownum me nunc non Pelasgas lacerans silva,
-[corpusque](http://ait.net/creditus-nitido) cernimus *Apolline* donisque
-offensus Aethiopasque Alpes. Superis cetera inter et medullas angue, tu loca et
-ales vetustas: inposita.
-
-\`\`\`js
-    if (san(remote) >= ddlDatabaseBoot(scsi_remote, 1, sram_frequency)) {
-        serverFileTebibyte += camelcase_raw(database_net) - -1 * heapZif;
-        laptopLogicDrop -= function_wimax;
-    } else {
-        passwordDigitize = gui_column_font + hdmi(printerMethodStack);
-    }
-    var rpc_virtual = thin_frequency_master;
-    ssh += teraflops(spooling_scroll_installer, 1, 52 - 5) + leopard;
-    var bootAdf = streaming(-4 + dvd - 4, -3, word);
-\`\`\`
-## Nitidique adventum interdum mihi sic habet membraque
-
-Quem focus sanguine alieno spernenda sumere studiisque gladios, qui se venit.
-Corpora *petis* sidera mihique graves Scylla exspatiemur poenas, stridores, ab
-nec cum mutatus [mundi](http://qua-qua.net/pendentexspectatum): numen. Veros
-lanient adest. Ille sine alimentaque unum; videt Cecropidae tempus, lustrabere,
-alis defluit ab forte, quae ferebat praeside. Inlato nemus!
-
-\`\`\`js
-    var sqlStreaming = monitor;
-    wpa = cellSamplingIteration;
-    font -= motion + -1 + 2 - 5;
-    if (error_rw_alert) {
-        bluetoothFddiEncryption = memorySynActive;
-    }
-\`\`\`
-
-## Est mori
-
-Vidisse et scit vim adsueta Aeacon. Rabiem multo iam umoris imagine *violentam
-non Persephones* causa ne, Lycaona sola *membra*. Nec tollite tantum: corpora
-genus origo destruitis te nulla *vulnere rupit ipsa* ictus sceleris nullique.
-Captabat mente, genibusque squalentia nymphen deo repugnas feriente medios
-mentem cervix, excussit. **Raptaque artus Myrrhae**, ubi coegi classis auro.
-
-\`\`\`js
-    if (nat_digital(balancingHard(ajaxDrive, vectorNetmaskFilename +
-            vle_integer), 4, hot_volume(parallel) * 874989)) {
-        server_full_box.dvr_optical(optical, maskTrim);
-    }
-    tiff(3, dvdVaporwareSystem(-1, 3), halfSliOem);
-    rw_iso_touchscreen(manet(client_cpl_twain / ascii, rte_flops_correction -
-            drive));
-    if (softwareSata + uddiDevice) {
-        interpreterOpen += market(copyCore);
-        commercialGigaflopsDefragment = 5 + configurationFormat - 2;
-    }
-\`\`\`
-## Putares rursusque non Latonia est sentit ossibus
-
-Tuum rupes canam adplicor penitus Neoptolemum pallentia animis? Formae viris
-attulit Abantiades ostendit nam illum.
-
-1. Sine per ego
-2. Novissima morte perveni sibi urguet thymo pellis
-3. Duae sed nec quatiens pulchros
-4. In ignis muneraque maiores
-
-Amplecti certa gratia orbe violenta iuvencis adimam. Et ora, succidere animi
-erat principio, tuaeque ingentem gemellos Dorylas aliquis motuque! Sed voce, est
-omnia, sine quae sinuataque; et habebat imitante.
-
-`;
-
 interface Props {
   tags: [ITag];
 }
@@ -102,7 +25,7 @@ const Create: NextPage<Props> = ({ tags }) => {
   const { session } = useSessionContext();
   const router = useRouter();
   const [title, setTitle] = useState<string>('');
-  const [markdown, setMarkdown] = useState<string | undefined>(dummyMarkdown);
+  const [markdown, setMarkdown] = useState<string | undefined>('');
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [coverName, setCoverName] = useState<string>('');
   const [coverUrl, setCoverUrl] = useState<string | undefined>('');
@@ -355,7 +278,7 @@ export default Create;
 
 export const getServerSideProps: GetServerSideProps = withPageAuth({
   redirectTo: '/login',
-  getServerSideProps: async context => {
+  getServerSideProps: async _ => {
     const { data: tags } = await supabase.from('tags').select();
 
     return {

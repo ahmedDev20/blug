@@ -5,7 +5,7 @@ export interface IPost {
   slug: string;
   markdown: string;
   coverUrl: string;
-  tags: [ITag];
+  tags: ITag[];
   author: IAuthor;
   comments: [IComment];
   bookmarks: [IBookmark];

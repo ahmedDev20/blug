@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { MdBookmark, MdBookmarkBorder, MdChatBubbleOutline } from 'react-icons/md';
 import { ILike, IPost, IBookmark } from '../lib/models';
@@ -99,6 +99,7 @@ export default function Reactions({ post }: Props) {
         ) : (
           <MdBookmarkBorder onClick={onPostBookmark} className="text-4xl focus:outline-none hover:text-blue-500 transition-colors cursor-pointer" />
         )}
+        <span className="text-xs font-bold">{bookmarked ? 'Saved' : ''}</span>
       </button>
 
       {post.comments.length > 0 && (
@@ -108,7 +109,6 @@ export default function Reactions({ post }: Props) {
       )}
 
       <ReactTooltip place="bottom" type="light" effect="solid" delayShow={300} delayHide={300} arrowColor="transparent" padding="8px" className="font-bold" />
-      <Toaster position="bottom-right" />
     </div>
   );
 }

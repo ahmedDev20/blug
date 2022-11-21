@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-      <ThemeProvider attribute="class" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="dark">
         <Header />
         <Layout>
           <Component {...pageProps} />
