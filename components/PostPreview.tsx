@@ -46,12 +46,11 @@ export const PostPreview = ({ post }: Props) => {
           </div>
 
           <Link href={`/authors/${post.author.id}`}>
-            <a href={`/authors/${post.author.id}`} className="overflow-hidden rounded-full w-12 h-12">
+            <a href={`/authors/${post.author.id}`} className="overflow-hidden rounded-full w-12 h-12 relative">
               <Image
-                height={48}
-                width={48}
+                layout="fill"
                 className="hover:scale-110 transition-transform duration-200 ease-in-out"
-                src={post.author?.avatar_url || `https://avatars.dicebear.com/api/adventurer-neutral/${post?.author?.id}.svg`}
+                src={post.author?.avatar_url}
                 alt={post.author?.name}
               />
             </a>

@@ -44,7 +44,7 @@ const Post: FC<Props> = ({ post }) => {
                 height={48}
                 width={48}
                 className="hover:scale-110 transition-transform duration-200 ease-in-out"
-                src={post.author?.avatar_url || `https://avatars.dicebear.com/api/adventurer-neutral/${post?.author?.id}.svg`}
+                src={post.author?.avatar_url}
                 alt={post.author?.name}
               />
             </a>
@@ -54,7 +54,9 @@ const Post: FC<Props> = ({ post }) => {
             Blog post by{' '}
             <Link href={`/authors/${post.author.id}`}>
               <a href={`/authors/${post.author.id}`}>
-                <span className="text-green-600 underline cursor-pointer">{post.author?.name}</span>
+                <a href={`/authors/${post.author.id}`} className="underline">
+                  <span className="text-green-600 underline cursor-pointer">{post.author?.name || post.author?.username}</span>
+                </a>
               </a>
             </Link>{' '}
             - published at {new Date(post.created_at).toLocaleDateString()}

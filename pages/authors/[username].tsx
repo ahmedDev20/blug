@@ -22,13 +22,7 @@ const Profile: NextPage<Props> = ({ posts, author }) => {
 
       <section className="max-w-5xl mx-auto px-5">
         <div className="flex flex-col items-center">
-          <Image
-            height={80}
-            width={80}
-            className="rounded-full object-cover"
-            src={author?.avatar_url || `https://avatars.dicebear.com/api/adventurer-neutral/${author?.id}.svg`}
-            alt="avatar"
-          />
+          <Image height={80} width={80} className="rounded-full object-cover" src={author?.avatar_url} alt="avatar" />
 
           <h1 className="text-2xl font-bold mt-2">{author?.name || author?.username}</h1>
 

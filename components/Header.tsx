@@ -9,6 +9,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import { Loading } from './Loading';
 
+const DROPDOWN_ITEMS = [
+  {
+    name: 'Profile',
+    href: '/profile',
+  },
+  {
+    name: 'Settings',
+    href: '/settings',
+  },
+  {
+    name: 'Sign out',
+    href: '/api/auth/signout',
+  },
+];
+
 const Header = () => {
   const user = useUser();
   const { supabaseClient, isLoading } = useSessionContext();
@@ -50,18 +65,24 @@ const Header = () => {
 
         <div className="hidden md:inline-flex items-center space-x-5">
           <Link href="/about">
-            <h3 className="cursor-pointer hover:underline">About</h3>
+            <a>
+              <h3 className="cursor-pointer hover:underline">About</h3>
+            </a>
           </Link>
 
           <Link href="/contact">
-            <h3 className="cursor-pointer hover:underline">Contact</h3>
+            <a>
+              <h3 className="cursor-pointer hover:underline">Contact</h3>
+            </a>
           </Link>
 
           {user && pathname != '/posts/create' && (
             <Link href="/posts/create">
-              <h3 className="border cursor-pointer px-4 py-1 rounded-full text-green-600 border-green-600 hover:bg-green-600 hover:text-white transition-colors ease-in-out dark:text-white dark:border-white dark:hover:border-transparent">
-                Create
-              </h3>
+              <a>
+                <h3 className="border cursor-pointer px-4 py-1 rounded-full text-slate-800 border-slate-800 hover:bg-slate-800 hover:text-white transition-colors ease-in-out dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-slate-900">
+                  Create
+                </h3>
+              </a>
             </Link>
           )}
         </div>
@@ -78,7 +99,7 @@ const Header = () => {
                 width={40}
                 onClick={() => setIsDropDownVisible(!isDropDownVisible)}
                 className="rounded-full shadow-sm cursor-pointer object-cover"
-                src={user.user_metadata.avatar_url || `https://avatars.dicebear.com/api/adventurer-neutral/${user.id}.svg`}
+                src={user.user_metadata.avatar_url}
                 alt={user.user_metadata.name}
               />
 
@@ -101,41 +122,16 @@ const Header = () => {
 
                 <div className="h-[1px] my-2 bg-gray-200 dark:bg-gray-700" />
 
-                <Link href="/dashboard">
-                  <button
-                    onClick={() => setIsDropDownVisible(false)}
-                    className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
-                  >
-                    Dashboard
-                  </button>
-                </Link>
-
-                <Link href="/posts/create">
-                  <button
-                    onClick={() => setIsDropDownVisible(false)}
-                    className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
-                  >
-                    Create Post
-                  </button>
-                </Link>
-
-                <Link href="/readinglist">
-                  <button
-                    onClick={() => setIsDropDownVisible(false)}
-                    className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
-                  >
-                    Reading list
-                  </button>
-                </Link>
-
-                <Link href="/settings">
-                  <button
-                    onClick={() => setIsDropDownVisible(false)}
-                    className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
-                  >
-                    Settings
-                  </button>
-                </Link>
+                {DROPDOWN_ITEMS.map(item => (
+                  <Link href={item.href}>
+                    <button
+                      onClick={() => setIsDropDownVisible(false)}
+                      className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
+                    >
+                      {item.name}
+                    </button>
+                  </Link>
+                ))}
 
                 <div className="h-[1px] my-2 bg-gray-200 dark:bg-gray-700" />
 
@@ -150,11 +146,13 @@ const Header = () => {
           )}
 
           {!user && pathname != '/login' && (
-            <div className="flex items-center space-x-5 text-green-600">
+            <div className="flex items-center space-x-5">
               <Link href="/login">
-                <h3 className="border cursor-pointer px-4 py-1 rounded-full border-green-600 hover:bg-green-600 hover:text-white transition-colors ease-in-out">
-                  Sign In
-                </h3>
+                <a>
+                  <h3 className="border cursor-pointer px-4 py-1 rounded-full text-slate-800 border-slate-800 hover:bg-slate-800 hover:text-white transition-colors ease-in-out dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-slate-900">
+                    Sign In
+                  </h3>
+                </a>
               </Link>
             </div>
           )}
