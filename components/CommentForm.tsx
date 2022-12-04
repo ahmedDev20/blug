@@ -48,7 +48,7 @@ const CommentForm: FC<Props> = ({ post }) => {
 
       resetForm();
 
-      router.reload();
+      setTimeout(router.reload, 2000);
     } catch (error) {
       toast.error('Something happend.');
     } finally {
@@ -56,7 +56,7 @@ const CommentForm: FC<Props> = ({ post }) => {
     }
   };
 
-  if (!user) return null;
+  if (!user) return <p className="text-md dark:text-white">Please login to comment</p>;
 
   return (
     <>
