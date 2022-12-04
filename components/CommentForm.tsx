@@ -48,7 +48,7 @@ const CommentForm: FC<Props> = ({ post }) => {
 
       resetForm();
 
-      setTimeout(window.location.reload, 2000);
+      setTimeout(() => window.location.reload(), 2000);
     } catch (error) {
       toast.error('Something happend.');
     } finally {
