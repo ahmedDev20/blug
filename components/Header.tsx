@@ -123,7 +123,7 @@ const Header = () => {
                 <div className="h-[1px] my-2 bg-gray-200 dark:bg-gray-700" />
 
                 {DROPDOWN_ITEMS.map(item => (
-                  <Link href={item.href}>
+                  <Link href={item.href} key={item.name}>
                     <button
                       onClick={() => setIsDropDownVisible(false)}
                       className="font-bold block text-left text-slate-900 hover:underline pl-3 pr-20 py-2 rounded-md text-sm dark:hover:bg-slate-700 dark:text-white"
