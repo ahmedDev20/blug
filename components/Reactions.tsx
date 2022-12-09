@@ -102,7 +102,7 @@ export default function Reactions({ post }: Props) {
         <span className="text-xs font-bold">{bookmarked ? 'Saved' : ''}</span>
       </button>
 
-      {post.comments.length > 0 && (
+      {post.comments?.length > 0 && (
         <a href="#comments" data-tip="Go to comments">
           <MdChatBubbleOutline className="text-4xl hover:text-orange-500 transition-colors hover:cursor-pointer" />
         </a>

@@ -11,16 +11,16 @@ import { Loading } from './Loading';
 
 const DROPDOWN_ITEMS = [
   {
-    name: 'Profile',
-    href: '/profile',
+    name: 'Dashboard',
+    href: '/dashboard',
   },
   {
-    name: 'Settings',
-    href: '/settings',
+    name: 'Create a post',
+    href: '/posts/create',
   },
   {
-    name: 'Sign out',
-    href: '/api/auth/signout',
+    name: 'Reading list',
+    href: '/readinglist',
   },
 ];
 

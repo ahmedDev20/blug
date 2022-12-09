@@ -13,19 +13,20 @@ export interface IPost {
 }
 
 export interface IAuthor {
-  id: string;
+  id: string | undefined;
   name: string;
   username: string;
   avatar_url: string;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface IComment {
-  id: number;
-  name: string;
+  id?: number;
   comment: string;
-  created_at: string;
-  avatar_url: string;
+  post_id: number;
+  author?: IAuthor;
+  author_id?: string;
+  created_at: number | string;
 }
 
 export interface ITag {

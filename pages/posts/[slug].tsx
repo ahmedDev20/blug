@@ -6,8 +6,10 @@ import { IComment, IPost } from '../../lib/models';
 import supabase from '../../lib/supabase';
 import Post from '../../components/Post';
 import { Toaster } from 'react-hot-toast';
-import CommentForm from '../../components/CommentForm';
 import Comments from '../../components/Comments';
+import ScrollToTop from 'react-scroll-to-top';
+import { MdArrowCircleUp, MdArrowDropUp, MdOutlineArrowCircleUp } from 'react-icons/md';
+import { FaLongArrowAltUp } from 'react-icons/fa';
 
 const Reactions = dynamic(() => import('../../components/Reactions'), { ssr: false });
 
@@ -30,11 +32,11 @@ const PostPage: NextPage<Props> = ({ post }) => {
         <div>
           <Post post={post} />
 
-          <CommentForm post={post} />
-
           <Comments post={post} />
         </div>
       </section>
+
+      <ScrollToTop smooth component={<FaLongArrowAltUp className="text-2xl text-yellow-500 text-center" />} className="flex items-center justify-center" />
 
       <Toaster position="bottom-right" />
     </>
@@ -46,7 +48,7 @@ export default PostPage;
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { data, error } = await supabase
     .from('posts')
-    .select('*, tags:posts_tags(tags(*)), author:authors(*), comments(*), likes(*), bookmarks(*)')
+    .select('*, tags:posts_tags(tags(*)), author:authors(*), comments(*, author:authors(*)), likes(*), bookmarks(*)')
     .eq('slug', params?.slug)
     .limit(1)
     .single();

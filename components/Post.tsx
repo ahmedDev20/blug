@@ -13,18 +13,9 @@ interface Props {
 }
 
 const Post: FC<Props> = ({ post }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md">
-      <Image
-        width={1000}
-        height={384}
-        onLoadingComplete={() => setIsLoading(false)}
-        className={`object-cover w-full bg-white ${isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'}`}
-        src={post.coverUrl}
-        alt={post.slug}
-      />
+      <Image width={1000} height={384} className={`object-cover w-full bg-white`} src={post.coverUrl} alt={post.slug} />
 
       <article className="px-5 py-3">
         <h1 className="text-5xl mb-3">{post.title}</h1>
@@ -38,8 +29,8 @@ const Post: FC<Props> = ({ post }) => {
         </ul>
 
         <div className="flex items-center space-x-2 mt-5">
-          <Link href={`/authors/${post.author.id}`}>
-            <a href={`/authors/${post.author.id}`} className="overflow-hidden rounded-full w-12 h-12">
+          <Link href={`/authors/${post.author?.id}`}>
+            <a href={`/authors/${post.author?.id}`} className="overflow-hidden rounded-full w-12 h-12">
               <Image
                 height={48}
                 width={48}
@@ -52,11 +43,9 @@ const Post: FC<Props> = ({ post }) => {
 
           <p className="font-extralight text-sm">
             Blog post by{' '}
-            <Link href={`/authors/${post.author.id}`}>
-              <a href={`/authors/${post.author.id}`}>
-                <a href={`/authors/${post.author.id}`} className="underline">
-                  <span className="text-green-600 underline cursor-pointer">{post.author?.name || post.author?.username}</span>
-                </a>
+            <Link href={`/authors/${post.author?.id}`}>
+              <a href={`/authors/${post.author?.id}`} className="underline">
+                <span className="text-green-600 underline cursor-pointer">{post.author?.name || post.author?.username}</span>
               </a>
             </Link>{' '}
             - published at {new Date(post.created_at).toLocaleDateString()}
