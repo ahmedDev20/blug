@@ -36,22 +36,22 @@ export const PostPreview = ({ post }: Props) => {
             <p className="text-xs">
               By{' '}
               <span>
-                <Link href={`/authors/${post.author.id}`}>
-                  <a href={`/authors/${post.author.id}`} className="underline">
-                    {post.author?.name || post.author?.username}
+                <Link href={`/authors/${post?.author?.username}`}>
+                  <a href={`/authors/${post?.author?.username}`} className="underline">
+                    {post?.author?.name || post?.author?.username}
                   </a>
                 </Link>
               </span>
             </p>
           </div>
 
-          <Link href={`/authors/${post.author.id}`}>
-            <a href={`/authors/${post.author.id}`} className="overflow-hidden rounded-full w-12 h-12 relative">
+          <Link href={`/authors/${post?.author?.username}`}>
+            <a href={`/authors/${post?.author?.username}`} className="overflow-hidden rounded-full w-12 h-12 relative">
               <Image
                 layout="fill"
                 className="hover:scale-110 transition-transform duration-200 ease-in-out"
-                src={post.author?.avatar_url}
-                alt={post.author?.name}
+                src={post?.author?.avatar_url}
+                alt={post?.author?.name}
               />
             </a>
           </Link>

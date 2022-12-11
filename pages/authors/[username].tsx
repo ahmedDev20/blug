@@ -10,10 +10,11 @@ import { IoLogoGithub } from 'react-icons/io';
 
 interface Props {
   posts: [IPost];
-  author: IAuthor;
 }
 
-const Profile: NextPage<Props> = ({ posts, author }) => {
+const Profile: NextPage<Props> = ({ posts }) => {
+  const author: IAuthor = posts[0].author;
+
   return (
     <>
       <Head>
@@ -26,20 +27,21 @@ const Profile: NextPage<Props> = ({ posts, author }) => {
 
           <h1 className="text-2xl font-bold mt-2">{author?.name || author?.username}</h1>
 
-          <div className="flex items-center mt-2 space-x-2 ">
+          <div className="flex items-center mt-2 space-x-2">
             <MdCake className="text-2xl" />
             <p>
               Joined on
               <span className="ml-1">
-                {new Date(author?.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {author?.created_at &&
+                  new Date(author?.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
               </span>
             </p>
 
-            <a href={`https://github.com/${author.username}`} target="_blank" rel="noreferrer noopener">
+            <a href={`https://github.com/${author?.username}`} target="_blank" rel="noreferrer noopener">
               <IoLogoGithub className="text-2xl hover:fill-purple-500 cursor-pointer transition-colors" />
             </a>
           </div>
@@ -50,7 +52,7 @@ const Profile: NextPage<Props> = ({ posts, author }) => {
         <h1 className="text-3xl  font-bold mt-4">Posts</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mt-3">
-          {posts.length > 0 ? posts?.map(post => <PostPreview key={post.id} post={post} />) : <p>You have no posts, go and create one ;)</p>}
+          {posts.length > 0 ? posts?.map(post => <PostPreview key={post.id} post={post} />) : <p>You have no posts, go and create one.</p>}
         </div>
       </section>
 
@@ -64,12 +66,8 @@ export default Profile;
 export const getServerSideProps: GetServerSideProps = withPageAuth({
   redirectTo: '/login',
   getServerSideProps: async (context, supabaseClient) => {
-    const { data: posts, error } = await supabaseClient
-      .from('posts')
-      .select('*, author:authors(*), tags:posts_tags(tags(*))')
-      .eq('author_id', context.params?.username);
-
-    const { data: authorsData, error: authorError } = await supabaseClient.from('authors').select('*').eq('id', context.params?.username);
+    const { data: author, error: authorError } = await supabaseClient.from('authors').select('*').eq('username', context.params?.username).single();
+    const { data: posts, error } = await supabaseClient.from('posts').select('*, author:authors(*), tags:posts_tags(tags(*))').eq('author_id', author?.id);
 
     if (error || authorError) {
       return {
@@ -77,12 +75,9 @@ export const getServerSideProps: GetServerSideProps = withPageAuth({
       };
     }
 
-    const [author] = authorsData;
-
     return {
       props: {
         posts: posts.map(post => ({ ...post, tags: post.tags.map((tag: any) => tag.tags) })),
-        author,
       },
     };
   },

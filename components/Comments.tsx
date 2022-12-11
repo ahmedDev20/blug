@@ -117,8 +117,8 @@ const Comment: FC<{ comment: IComment }> = ({ comment }) => {
     <div key={comment.created_at} className="bg-white border rounded shadow py-3 px-5 dark:bg-transparent">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-3">
-          <Link href={`/authors/${comment.author?.id}`}>
-            <a href={`/authors/${comment.author?.id}`} className="overflow-hidden rounded-full w-10 h-10">
+          <Link href={`/authors/${comment.author?.username}`}>
+            <a href={`/authors/${comment.author?.username}`} className="overflow-hidden rounded-full w-10 h-10">
               <Image
                 width={40}
                 height={40}
@@ -129,8 +129,8 @@ const Comment: FC<{ comment: IComment }> = ({ comment }) => {
             </a>
           </Link>
 
-          <Link href={`/authors/${comment.author?.id}`}>
-            <a href={`/authors/${comment.author?.id}`} className="underline text-yellow-500">
+          <Link href={`/authors/${comment.author?.username}`}>
+            <a href={`/authors/${comment.author?.username}`} className="underline text-yellow-500">
               {comment.author?.name || comment.author?.username}
             </a>
           </Link>

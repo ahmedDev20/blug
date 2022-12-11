@@ -39,6 +39,8 @@ const Create: NextPage<Props> = ({ tags }) => {
   const tagsListRef = useRef<HTMLUListElement | null>(null);
   useOnClickOutside(tagsListRef, () => setTagsOpen(false));
 
+  console.log(markdown);
+
   const onTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = event.target;
     textarea.style.height = `auto`;
@@ -214,7 +216,7 @@ const Create: NextPage<Props> = ({ tags }) => {
           </div>
 
           <textarea
-            className="block outline-none text-xl md:text-4xl resize-none w-full font-extrabold placeholder:font-extrabold placeholder:text-[#525252] dark:placeholder:text-white dark:bg-transparent"
+            className="block outline-none text-xl md:text-4xl resize-none w-full font-extrabold placeholder:font-extrabold placeholder:text-gray-500 dark:placeholder:text-gray-300 dark:bg-transparent"
             onInput={onTitleChange}
             value={title}
             placeholder="New post title here..."
@@ -245,7 +247,7 @@ const Create: NextPage<Props> = ({ tags }) => {
             {tagsOpen && (
               <ul
                 ref={tagsListRef}
-                className="w-full mt-2 space-y-3 shadow-md rounded-md dark:bg-slate-800 max-h-52 overflow-y-auto scrollbar-thumb-gray-400 scrollbar-thin scrollbar-thumb-rounded-xl scrollbar-track-gray-200"
+                className="w-full mt-2 space-y-3 shadow-md bg-gray-100 rounded-md dark:bg-slate-800 max-h-52 overflow-y-auto scrollbar-thumb-gray-400 scrollbar-thin scrollbar-thumb-rounded-xl scrollbar-track-gray-200"
               >
                 {initialTags.map(tag => (
                   <li

@@ -17,7 +17,7 @@ export interface IAuthor {
   name: string;
   username: string;
   avatar_url: string;
-  created_at?: string;
+  created_at?: number | string;
 }
 
 export interface IComment {

@@ -21,24 +21,24 @@ const Home: NextPage<Props> = ({ posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="max-w-7xl mx-auto flex justify-between bg-yellow-400 py-10 px-5 dark:bg-slate-900">
+      <section className="max-w-7xl mx-auto flex justify-between py-10 px-5 dark:bg-slate-900">
         <div className="space-y-5">
-          <h1 className="text-6xl max-w-xl font-serif">
-            <span className="underline decoration-black decoration-4 dark:no-underline">Blug</span> is a place to write, read and connect
+          <h1 className="text-6xl max-w-xl font-serif leading-tight">
+            <span className="underline decoration-black decoration-4 dark:no-underline">Blug</span> is a place to write, read and connect.
           </h1>
 
           <h2>It&apos;s easy and free to post your thinking on any topic and connect with millions of readers.</h2>
         </div>
 
         <div className="!hidden md:!inline-flex h-32 lg:h-full">
-          <Image width={300} height={100} objectFit="contain" src={theme == 'light' ? '/blug-logo.png' : '/blug-logo-white.png'} alt="medium logo" />
+          <Image width={400} height={200} objectFit="contain" src={theme == 'light' ? '/blug-logo.png' : '/blug-logo-white.png'} alt="medium logo" />
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto p-5 md:p-6">
         <div className="flex items-center gap-10 mb-10">
           <h1 className="text-3xl font-serif">Latest posts</h1>
-          <hr className="flex-1 border-yellow-500" />
+          <hr className="flex-1 border-black dark:border-white" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">

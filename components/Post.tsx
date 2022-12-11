@@ -29,8 +29,8 @@ const Post: FC<Props> = ({ post }) => {
         </ul>
 
         <div className="flex items-center space-x-2 mt-5">
-          <Link href={`/authors/${post.author?.id}`}>
-            <a href={`/authors/${post.author?.id}`} className="overflow-hidden rounded-full w-12 h-12">
+          <Link href={`/authors/${post.author?.username}`}>
+            <a className="overflow-hidden rounded-full w-12 h-12">
               <Image
                 height={48}
                 width={48}
@@ -43,8 +43,8 @@ const Post: FC<Props> = ({ post }) => {
 
           <p className="font-extralight text-sm">
             Blog post by{' '}
-            <Link href={`/authors/${post.author?.id}`}>
-              <a href={`/authors/${post.author?.id}`} className="underline">
+            <Link href={`/authors/${post.author?.username}`}>
+              <a className="underline">
                 <span className="text-green-600 underline cursor-pointer">{post.author?.name || post.author?.username}</span>
               </a>
             </Link>{' '}
