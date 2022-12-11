@@ -51,7 +51,7 @@ export const PostPreview = ({ post }: Props) => {
                 layout="fill"
                 className="hover:scale-110 transition-transform duration-200 ease-in-out"
                 src={post?.author?.avatar_url}
-                alt={post?.author?.name}
+                alt={post?.author?.name || post?.author?.username}
               />
             </a>
           </Link>
