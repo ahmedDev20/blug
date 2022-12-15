@@ -96,7 +96,7 @@ const Create: NextPage<Props> = ({ tags }) => {
     if (!markdown) return toast.error('Please add some content.');
 
     try {
-      const slug = title?.trim().toLowerCase().replace(/\s+/g, '-').replace('?', '');
+      const slug = title?.trim().toLowerCase().replace(/\s+/g, '-').replace('?', '').concat(`-${Date.now()}`);
 
       setIsPublishing(true);
 
