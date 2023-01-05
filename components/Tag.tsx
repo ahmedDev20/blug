@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITag } from '../lib/models';
+import { ITag } from '../lib/types';
 
 interface Props {
   tag: ITag;

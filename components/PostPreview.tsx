@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IPost, ITag } from '../lib/models';
+import { IPost, ITag } from '../lib/types';
 import { Tag } from './Tag';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -12,14 +12,14 @@ export const PostPreview = ({ post }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className="rounded-lg overflow-hidden bg-gray-200 dark:bg-slate-800 shadow-md">
+    <div className="rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md">
       <Link key={post.id} href={`/posts/${post.slug}`}>
-        <a href={`/posts/${post.slug}`}>
+        <a>
           <Image
             className={`h-60 cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out ${
               isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'
             }`}
-            width={400}
+            width={500}
             height={240}
             src={post.coverUrl}
             alt={post.slug}

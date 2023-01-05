@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import supabase from '../lib/supabase';
-import { IPost } from '../lib/models';
+import { IPost } from '../lib/types';
 import { PostPreview } from '../components/PostPreview';
 import { useTheme } from 'next-themes';
 
@@ -21,22 +21,20 @@ const Home: NextPage<Props> = ({ posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="max-w-7xl mx-auto flex justify-between py-10 px-5 dark:bg-slate-900">
-        <div className="space-y-5">
-          <h1 className="text-6xl max-w-xl font-serif leading-tight">
-            <span className="underline decoration-black decoration-4 dark:no-underline">Blug</span> is a place to write, read and connect.
-          </h1>
-
-          <h2>It&apos;s easy and free to post your thinking on any topic and connect with millions of readers.</h2>
+      <section className="max-w-7xl mx-auto px-2 md:px-0 dark:bg-slate-900">
+        <div className="flex justify-between">
+          <div className="space-y-5">
+            <h1 className="text-6xl max-w-xl font-serif leading-tight">
+              <span className="underline decoration-black decoration-4 dark:no-underline">Blug</span> is a place to write, read and connect.
+            </h1>
+            <h2>It&apos;s easy and free to post your thinking on any topic and connect with millions of readers.</h2>
+          </div>
+          <div className="!hidden md:!inline-flex h-32 lg:h-full">
+            <Image width={400} height={200} objectFit="contain" src={theme == 'light' ? '/blug-logo.png' : '/blug-logo-white.png'} alt="medium logo" />
+          </div>
         </div>
 
-        <div className="!hidden md:!inline-flex h-32 lg:h-full">
-          <Image width={400} height={200} objectFit="contain" src={theme == 'light' ? '/blug-logo.png' : '/blug-logo-white.png'} alt="medium logo" />
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto p-5 md:p-6">
-        <div className="flex items-center gap-10 mb-10">
+        <div className="flex items-center gap-10 my-6">
           <h1 className="text-3xl font-serif">Latest posts</h1>
           <hr className="flex-1 border-black dark:border-white" />
         </div>

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { IPost, ITag } from '../lib/models';
+import { IPost, ITag } from '../lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 

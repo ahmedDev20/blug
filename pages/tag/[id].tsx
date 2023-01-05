@@ -1,5 +1,5 @@
 import { NextPage, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { IPost, ITag } from '../../lib/models';
+import { IPost, ITag } from '../../lib/types';
 import supabase from '../../lib/supabase';
 import Head from 'next/head';
 import { PostPreview } from '../../components/PostPreview';

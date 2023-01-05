@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 import { MdBookmarkBorder } from 'react-icons/md';
 import { PostPreview } from '../components/PostPreview';
-import { IBookmark, ITag } from '../lib/models';
+import { IBookmark, ITag } from '../lib/types';
 
 interface Props {
   bookmarks: [IBookmark];
@@ -17,11 +17,11 @@ const ReadingList: NextPage<Props> = ({ bookmarks }) => {
         <title>Reading List - Blug</title>
       </Head>
 
-      <section className="max-w-5xl mx-auto px-5">
-        <h1 className="text-3xl font-bold mt-4">Reading List ({bookmarks.length})</h1>
+      <section className="max-w-7xl mx-auto px-2 md:px-0">
+        <h1 className="text-3xl font-bold mt-4 mb-5">Reading List ({bookmarks.length} posts)</h1>
 
         {bookmarks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mt-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             {bookmarks?.map((bookmark: IBookmark) => (
               <PostPreview key={bookmark.id} post={bookmark.post} />
             ))}

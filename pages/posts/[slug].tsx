@@ -2,13 +2,12 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-import { IComment, IPost } from '../../lib/models';
+import { IComment, IPost } from '../../lib/types';
 import supabase from '../../lib/supabase';
 import Post from '../../components/Post';
 import { Toaster } from 'react-hot-toast';
 import Comments from '../../components/Comments';
 import ScrollToTop from 'react-scroll-to-top';
-import { MdArrowCircleUp, MdArrowDropUp, MdOutlineArrowCircleUp } from 'react-icons/md';
 import { FaLongArrowAltUp } from 'react-icons/fa';
 
 const Reactions = dynamic(() => import('../../components/Reactions'), { ssr: false });

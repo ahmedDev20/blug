@@ -2,7 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { MdBookmark, MdBookmarkBorder, MdChatBubbleOutline } from 'react-icons/md';
-import { ILike, IPost, IBookmark } from '../lib/models';
+import { ILike, IPost, IBookmark } from '../lib/types';
 import supabase from '../lib/supabase';
 import ReactTooltip from 'react-tooltip';
 import { useUser } from '@supabase/auth-helpers-react';

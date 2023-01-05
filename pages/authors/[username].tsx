@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 import { PostPreview } from '../../components/PostPreview';
-import { IAuthor, IPost } from '../../lib/models';
+import { IAuthor, IPost } from '../../lib/types';
 import { MdCake } from 'react-icons/md';
 import Image from 'next/image';
 import { IoLogoGithub } from 'react-icons/io';

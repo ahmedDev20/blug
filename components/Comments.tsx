@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { IComment, IPost } from '../lib/models';
+import { IComment, IPost } from '../lib/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';

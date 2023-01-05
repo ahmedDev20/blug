@@ -1,4 +1,4 @@
-import { IPost } from '../lib/models';
+import { IPost } from '../lib/types';
 
 interface Props {
   posts: [IPost];

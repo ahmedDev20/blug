@@ -11,7 +11,7 @@ import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
 import { Loading } from '../../components/Loading';
-import { ITag } from '../../lib/models';
+import { ITag } from '../../lib/types';
 import { IoIosClose } from 'react-icons/io';
 import { useOnClickOutside } from 'usehooks-ts';
 
@@ -38,8 +38,6 @@ const Create: NextPage<Props> = ({ tags }) => {
   const tagInputRef = useRef<HTMLInputElement | null>(null);
   const tagsListRef = useRef<HTMLUListElement | null>(null);
   useOnClickOutside(tagsListRef, () => setTagsOpen(false));
-
-  console.log(markdown);
 
   const onTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = event.target;
@@ -172,7 +170,7 @@ const Create: NextPage<Props> = ({ tags }) => {
         <title>New post - Blug</title>
       </Head>
 
-      <section className="max-w-5xl mx-auto px-5">
+      <section className="max-w-7xl mx-auto px-2 md:px-0">
         <h1 className="text-3xl font-bold">Create a new post</h1>
 
         <form onSubmit={onPublish} className="border rounded-lg px-4 md:px-12 py-8 mt-4 bg-white dark:bg-transparent">
@@ -216,7 +214,7 @@ const Create: NextPage<Props> = ({ tags }) => {
           </div>
 
           <textarea
-            className="block outline-none text-xl md:text-4xl resize-none w-full font-extrabold placeholder:font-extrabold placeholder:text-gray-500 dark:placeholder:text-gray-300 dark:bg-transparent"
+            className="block outline-none text-xl md:text-3xl resize-none w-full font-extrabold placeholder:font-extrabold placeholder:text-gray-500 dark:placeholder:text-gray-300 dark:bg-transparent"
             onInput={onTitleChange}
             value={title}
             placeholder="New post title here..."
