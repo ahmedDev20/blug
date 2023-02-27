@@ -4,10 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
 import toast from 'react-hot-toast';
 import { Loading } from './Loading';
 import supabase from '../lib/supabase';
+import { formatDate } from '../lib/date-formatter';
 
 interface IFormInput {
   name: string;
@@ -29,6 +29,14 @@ const Comments: FC<Props> = ({ post }) => {
     formState: { errors },
   } = useForm<IFormInput>();
 
+  const fetchComments = async () => {
+    const { data, error } = await supabase.from('comments').select('*, author:authors(*)').eq('post_id', post.id).order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    setComments(data);
+  };
+
   const onComment: SubmitHandler<IFormInput> = async data => {
     const { comment } = data;
 
@@ -46,19 +54,12 @@ const Comments: FC<Props> = ({ post }) => {
 
       if (error) throw error;
 
-      newComment.author = {
-        id: user?.id,
-        name: user?.user_metadata.full_name,
-        username: user?.user_metadata.user_name,
-        avatar_url: user?.user_metadata.avatar_url,
-      };
-
-      setComments([newComment, ...comments]);
-      toast.success('Comment submitted.');
-
       resetForm();
+
+      toast.success('Comment submitted');
+      fetchComments();
     } catch (error) {
-      toast.error('Something happend.');
+      toast.error('Something happend');
     } finally {
       setSubmitted(false);
     }
@@ -124,7 +125,7 @@ const Comment: FC<{ comment: IComment }> = ({ comment }) => {
                 height={40}
                 className="hover:scale-110 transition-transform duration-200 ease-in-out"
                 src={comment?.author?.avatar_url || ''}
-                alt={comment?.author?.name}
+                alt={comment?.author?.name!}
               />
             </a>
           </Link>
@@ -136,7 +137,7 @@ const Comment: FC<{ comment: IComment }> = ({ comment }) => {
           </Link>
         </div>
 
-        <span className="text-xs text-gray-600 font-extralight dark:text-white">{new Date(comment.created_at).toLocaleDateString()}</span>
+        <span className="text-xs text-gray-600 font-extralight dark:text-white">{formatDate(comment.created_at)}</span>
       </div>
 
       <p className="text-lg">{comment.comment}</p>

@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Tag } from './Tag';
+import { formatDate } from '../lib/date-formatter';
 
 interface Props {
   post: IPost;
@@ -15,9 +16,9 @@ interface Props {
 const Post: FC<Props> = ({ post }) => {
   return (
     <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md">
-      <Image width={1000} height={384} className={`object-cover w-full bg-white`} src={post.coverUrl} alt={post.slug} />
+      <Image width={1000} height={500} className={`object-cover w-full bg-white`} src={post.coverUrl} alt={post.slug} />
 
-      <article className="px-5 py-3">
+      <article className="px-2 md:px-5 py-3">
         <h1 className="text-5xl mb-3">{post.title}</h1>
 
         <ul className="flex items-center space-x-2 mb-3">
@@ -48,7 +49,7 @@ const Post: FC<Props> = ({ post }) => {
                 <span className="text-green-600 underline cursor-pointer">{post.author?.name || post.author?.username}</span>
               </a>
             </Link>{' '}
-            - published at {new Date(post.created_at).toLocaleDateString()}
+            - published {formatDate(post.created_at)}
           </p>
         </div>
 

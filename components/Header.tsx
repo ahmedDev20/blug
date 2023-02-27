@@ -56,7 +56,7 @@ const Header = () => {
   useOnClickOutside(dropDownRef, () => setIsDropDownVisible(false), 'mouseup');
 
   return (
-    <header className="flex justify-between px-2 md:p-0 mb-4 sticky top-0 shadow-sm z-50 text-black dark:text-white  bg-gray-100 dark:bg-slate-800">
+    <header className="flex justify-between px-2 md:mb-4 sticky top-0 shadow-sm z-50 text-black dark:text-white  bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-5">
           <Link href="/">

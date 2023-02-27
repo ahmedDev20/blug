@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "dev": "start http://localhost:3001 && next dev -p 3001",
+    "dev": "start http://localhost:3000 && next dev",
     "build": "next build",
     "start": "next start"
   },

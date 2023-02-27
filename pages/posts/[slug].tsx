@@ -35,7 +35,11 @@ const PostPage: NextPage<Props> = ({ post }) => {
         </div>
       </section>
 
-      <ScrollToTop smooth component={<FaLongArrowAltUp className="text-2xl text-yellow-500 text-center" />} className="flex items-center justify-center" />
+      <ScrollToTop
+        smooth
+        component={<FaLongArrowAltUp className="text-2xl text-yellow-500 text-center" />}
+        className="hidden items-center justify-center md:flex"
+      />
 
       <Toaster position="bottom-right" />
     </>
