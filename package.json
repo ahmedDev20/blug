@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "start http://localhost:3000 && next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^13.0.6",
@@ -13,7 +14,7 @@
     "@supabase/supabase-js": "^2.0.4",
     "@uiw/react-md-editor": "^3.19.1",
     "goober": "^2.1.11",
-    "next": "latest",
+    "next": "^12.1.0",
     "next-remove-imports": "^1.0.8",
     "next-themes": "^0.2.1",
     "next-transpile-modules": "^9.1.0",

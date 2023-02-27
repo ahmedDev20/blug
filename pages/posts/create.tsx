@@ -184,8 +184,7 @@ const Create: NextPage<Props> = ({ tags }) => {
                   onError={() => toast.error("Sorry, we couldn't load the cover. Please try again.")}
                   width={300}
                   height={200}
-                  objectFit="cover"
-                  alt={coverFile?.name}
+                  alt={coverFile?.name!}
                 />
               </div>
             )}
