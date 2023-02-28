@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { Session, SessionContextProvider } from '@supabase/auth-helpers-react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { ThemeProvider } from 'next-themes';
 import Layout from '../components/Layout';
@@ -18,7 +18,7 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps<{ initialSession: Session }>) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (

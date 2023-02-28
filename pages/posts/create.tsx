@@ -162,6 +162,7 @@ const Create: NextPage<Props> = ({ tags }) => {
 
   useEffect(() => {
     onTagSearch(tagSearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagSearch]);
 
   return (
