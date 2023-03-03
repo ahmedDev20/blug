@@ -6,18 +6,20 @@ import { IComment, IPost } from '../../lib/types';
 import supabase from '../../lib/supabase';
 import Post from '../../components/Post';
 import { Toaster } from 'react-hot-toast';
-import Comments from '../../components/Comments';
 import ScrollToTop from 'react-scroll-to-top';
 import { FaLongArrowAltUp } from 'react-icons/fa';
+import Reactions from '../../components/Reactions';
 
-const Reactions = dynamic(() => import('../../components/Reactions'), { ssr: false });
+const Comments = dynamic(() => import('../../components/Comments'));
 
 interface Props {
   post: IPost;
 }
 
 const PostPage: NextPage<Props> = ({ post }) => {
-  const title = `${post.title} - Blog`;
+  const title = `${post?.title} - Blog`;
+
+  if (!post) return null;
 
   return (
     <>
@@ -31,7 +33,7 @@ const PostPage: NextPage<Props> = ({ post }) => {
         <div>
           <Post post={post} />
 
-          <Comments post={post} />
+          <Comments postId={post.id} />
         </div>
       </section>
 

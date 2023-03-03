@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { IComment, IPost } from '../lib/types';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,12 +15,12 @@ interface IFormInput {
 }
 
 interface Props {
-  post: IPost;
+  postId: number;
 }
 
-const Comments: FC<Props> = ({ post }) => {
+const Comments: FC<Props> = ({ postId }) => {
   const user = useUser();
-  const [comments, setComments] = useState<IComment[]>(post.comments);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const {
     register,
@@ -29,13 +29,13 @@ const Comments: FC<Props> = ({ post }) => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const fetchComments = async () => {
-    const { data, error } = await supabase.from('comments').select('*, author:authors(*)').eq('post_id', post.id).order('created_at', { ascending: false });
+  const fetchComments = useCallback(async () => {
+    const { data, error } = await supabase.from('comments').select('*, author:authors(*)').eq('post_id', postId).order('created_at', { ascending: false });
 
     if (error) throw error;
 
     setComments(data as IComment[]);
-  };
+  }, [postId]);
 
   const onComment: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const { comment } = data;
@@ -46,7 +46,7 @@ const Comments: FC<Props> = ({ post }) => {
       const newComment: IComment = {
         comment,
         author_id: user?.id,
-        post_id: post.id,
+        post_id: postId,
         created_at: new Date().toISOString(),
       };
 
@@ -64,6 +64,10 @@ const Comments: FC<Props> = ({ post }) => {
       setSubmitted(false);
     }
   };
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments, postId]);
 
   if (!user) return null;
 
