@@ -28,7 +28,7 @@ const PostPage: NextPage<Props> = ({ post }) => {
       </Head>
 
       <section className="max-w-4xl mx-auto md:flex">
-        <Reactions post={post} />
+        <Reactions postId={post.id} />
 
         <div>
           <Post post={post} />

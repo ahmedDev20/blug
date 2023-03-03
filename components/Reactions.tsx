@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { MdBookmark, MdBookmarkBorder, MdChatBubbleOutline } from 'react-icons/md';
@@ -9,14 +9,35 @@ import { useUser } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
 
 interface Props {
-  post: IPost;
+  postId: number;
 }
 
-export default function Reactions({ post }: Props) {
+export default function Reactions({ postId }: Props) {
   const user = useUser();
-  const [liked, setLiked] = useState<boolean>(post.likes?.some((like: ILike) => like.author_id === user?.id));
-  const [bookmarked, setBookmarked] = useState<boolean>(post.bookmarks?.some((bookmark: IBookmark) => bookmark.author_id === user?.id));
-  const [likes, setLikes] = useState<number>(post.likes?.length || 0);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const [hasComments, setHasComments] = useState(false);
+  const [likes, setLikes] = useState<number>(0);
+
+  const fetchReactions = useCallback(async () => {
+    const { data, error } = await supabase.from('posts').select('*, likes:likes(*), bookmarks:bookmarks(*), comments:comments(*)').eq('id', postId).single();
+
+    if (error) {
+      setLiked(false);
+      setBookmarked(false);
+      setLikes(0);
+      setHasComments(false);
+    }
+
+    setLiked(data?.likes.some((like: ILike) => like.author_id === user?.id));
+    setBookmarked(data?.bookmarks.some((bookmark: IBookmark) => bookmark.author_id === user?.id));
+    setLikes(data?.likes.length);
+    setHasComments(data?.comments.length > 0);
+  }, [postId, user?.id]);
+
+  useEffect(() => {
+    fetchReactions();
+  }, [fetchReactions]);
 
   const onPostLike = async () => {
     if (!user)
@@ -36,7 +57,7 @@ export default function Reactions({ post }: Props) {
     setLikes(likes + 1);
     setLiked(true);
 
-    const { error } = await supabase.from('likes').insert({ post_id: post.id, author_id: user?.id });
+    const { error } = await supabase.from('likes').insert({ post_id: postId, author_id: user?.id });
 
     if (error) {
       setLikes(likes => likes - 1);
@@ -48,7 +69,7 @@ export default function Reactions({ post }: Props) {
     setLikes(likes - 1);
     setLiked(false);
 
-    const { error } = await supabase.from('likes').delete().match({ post_id: post.id, author_id: user?.id });
+    const { error } = await supabase.from('likes').delete().match({ post_id: postId, author_id: user?.id });
 
     if (error) {
       setLikes(likes => likes + 1);
@@ -61,7 +82,7 @@ export default function Reactions({ post }: Props) {
 
     setBookmarked(true);
 
-    const { error } = await supabase.from('bookmarks').insert({ post_id: post.id, author_id: user?.id });
+    const { error } = await supabase.from('bookmarks').insert({ post_id: postId, author_id: user?.id });
 
     if (error) {
       setBookmarked(false);
@@ -71,7 +92,7 @@ export default function Reactions({ post }: Props) {
   const onPostUnbookmark = async () => {
     setBookmarked(false);
 
-    const { error } = await supabase.from('bookmarks').delete().match({ post_id: post.id, author_id: user?.id });
+    const { error } = await supabase.from('bookmarks').delete().match({ post_id: postId, author_id: user?.id });
 
     if (error) {
       setBookmarked(true);
@@ -79,7 +100,7 @@ export default function Reactions({ post }: Props) {
   };
 
   return (
-    <div className="fixed z-20 left-0 bottom-0 w-full md:w-fit p-4 flex px-4 gap-8 justify-between bg-gray-100 shadow-lg dark:bg-slate-900 md:h-1/4 md:relative md:flex-col">
+    <div className="fixed z-20 left-0 bottom-0 w-full md:w-fit p-4 flex px-4 gap-8 justify-between md:h-1/4 md:relative md:flex-col">
       <button className="flex space-x-2 items-center cursor-default md:flex-col md:space-x-0">
         {liked ? (
           <IoMdHeart onClick={onPostDislike} data-tip="Dislike" className="text-4xl text-red-500 focus:outline-none hover:cursor-pointer" />
@@ -102,7 +123,7 @@ export default function Reactions({ post }: Props) {
         <span className="text-xs font-bold">{bookmarked ? 'Saved' : ''}</span>
       </button>
 
-      {post.comments?.length > 0 && (
+      {hasComments && (
         <a href="#comments" data-tip="Go to comments">
           <MdChatBubbleOutline className="text-4xl hover:text-orange-500 transition-colors hover:cursor-pointer" />
         </a>
