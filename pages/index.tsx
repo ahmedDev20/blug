@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
-  const posts = data.map((post: IPost) => ({
+  const posts = data.map((post: any) => ({
     ...post,
     tags: post.tags.map((e: any) => e.tags),
   }));

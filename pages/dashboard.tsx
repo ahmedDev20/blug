@@ -36,7 +36,7 @@ export default function Dashboard(props: Props) {
 
 export const getServerSideProps: GetServerSideProps = withPageAuth({
   redirectTo: '/login',
-  getServerSideProps: async (context, supabaseClient) => {
+  getServerSideProps: async (_, supabaseClient) => {
     const { error, data } = await supabaseClient.auth.getUser();
 
     if (error) {

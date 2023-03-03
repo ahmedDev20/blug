@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = withPageAuth({
       };
     }
 
-    bookmarks = data.map((bookmark: IBookmark) => {
+    bookmarks = data.map((bookmark: any) => {
       bookmark.post.tags = bookmark.post.tags.map((e: any) => e.tags) as [ITag];
       return bookmark;
     });

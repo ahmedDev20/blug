@@ -34,10 +34,10 @@ const Comments: FC<Props> = ({ post }) => {
 
     if (error) throw error;
 
-    setComments(data);
+    setComments(data as IComment[]);
   };
 
-  const onComment: SubmitHandler<IFormInput> = async data => {
+  const onComment: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     const { comment } = data;
 
     try {

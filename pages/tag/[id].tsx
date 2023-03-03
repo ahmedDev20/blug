@@ -48,12 +48,13 @@ export async function getServerSideProps(ctx: Context): Promise<Result> {
     };
   }
 
-  const posts = data?.map(item => ({ ...item.post, tags: [item.tag] }));
+  const posts = data.map(item => ({ ...item.post, tags: [item.tag] })) as IPost[];
+  const tag = data?.[0].tag as ITag;
 
   return {
     props: {
       posts,
-      tag: data?.[0].tag,
+      tag,
     },
   };
 }
