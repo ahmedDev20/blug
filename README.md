@@ -1,9 +1,5 @@
 # Blug
 
-<img src="https://i.ibb.co/hCDHSJB/blug-logo.png" alt="blug-logo" border="0">
-
-<img src="https://i.ibb.co/QFhZytW/blug-logo-white.png" alt="blug-logo-white" border="0">
-
 🔴 Blug is blog website built with with NextJS, TypeScript, Supabase and Tailwind CSS
 
 ## Demo https://blug.vercel.app
