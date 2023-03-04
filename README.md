@@ -2,7 +2,9 @@
 
 🔴 Blug is blog website built with with NextJS, TypeScript, Supabase and Tailwind CSS
 
-## Demo https://blug.vercel.app
+## Demo
+
+https://blug.vercel.app
 
 ## Overview
 
