@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { IComment, IPost } from '../../lib/types';
 import supabase from '../../lib/supabase';
 import Post from '../../components/Post';
-import { Toaster } from 'react-hot-toast';
 import ScrollToTop from 'react-scroll-to-top';
 import { FaLongArrowAltUp } from 'react-icons/fa';
 import Reactions from '../../components/Reactions';
@@ -42,8 +41,6 @@ const PostPage: NextPage<Props> = ({ post }) => {
         component={<FaLongArrowAltUp className="text-2xl text-yellow-500 text-center" />}
         className="hidden items-center justify-center md:flex"
       />
-
-      <Toaster position="bottom-right" />
     </>
   );
 };

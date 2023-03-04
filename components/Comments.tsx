@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Loading } from './Loading';
+import { Loading } from './shared/Loading';
 import supabase from '../lib/supabase';
 import { formatDate } from '../lib/date-formatter';
 

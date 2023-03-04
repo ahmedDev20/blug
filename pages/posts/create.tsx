@@ -2,7 +2,7 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import supabase, { COVERS_BUCKET_ID } from '../../lib/supabase';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -10,7 +10,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
-import { Loading } from '../../components/Loading';
+import { Loading } from '../../components/shared/Loading';
 import { ITag } from '../../lib/types';
 import { IoIosClose } from 'react-icons/io';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -267,8 +267,6 @@ const Create: NextPage<Props> = ({ tags }) => {
             {isPublishing ? <Loading label="Publishing..." /> : 'Publish'}
           </button>
         </form>
-
-        <Toaster />
       </section>
     </>
   );

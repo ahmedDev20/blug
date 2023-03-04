@@ -1,7 +1,6 @@
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { Toaster } from 'react-hot-toast';
 import { MdBookmarkBorder } from 'react-icons/md';
 import { PostPreview } from '../components/PostPreview';
 import { IBookmark, ITag } from '../lib/types';
@@ -37,8 +36,6 @@ const ReadingList: NextPage<Props> = ({ bookmarks }) => {
           </div>
         )}
       </section>
-
-      <Toaster />
     </>
   );
 };

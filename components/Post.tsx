@@ -16,7 +16,7 @@ interface Props {
 const Post: FC<Props> = ({ post }) => {
   return (
     <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md">
-      <Image width={1000} height={500} className={`object-cover w-full bg-white`} src={post.coverUrl} alt={post.slug} />
+      <Image width={1000} height={500} className="object-cover w-full bg-white scale-[1.01]" src={post.coverUrl} alt={post.slug} />
 
       <article className="px-2 md:px-5 py-3">
         <h1 className="text-5xl mb-3">{post.title}</h1>

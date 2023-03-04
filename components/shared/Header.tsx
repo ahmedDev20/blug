@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { useUser, useSessionContext } from '@supabase/auth-helpers-react';
 import { useTheme } from 'next-themes';
-import { MdOutlineLightMode, MdOutlineNightlight } from 'react-icons/md';
 import { CiDark, CiLight } from 'react-icons/ci';
 import React, { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -56,7 +55,7 @@ const Header = () => {
   useOnClickOutside(dropDownRef, () => setIsDropDownVisible(false), 'mouseup');
 
   return (
-    <header className="flex justify-between px-2 md:mb-4 sticky top-0 shadow-sm z-50 text-black dark:text-white  bg-gray-100 dark:bg-slate-800">
+    <header className="flex justify-between px-2 md:mb-4 sticky top-0 shadow-md z-20 text-black dark:text-white  bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-5">
           <Link href="/">
