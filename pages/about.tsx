@@ -1,5 +1,22 @@
+import { motion } from 'framer-motion';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+
+const heartVariants = {
+  start: {
+    y: 0,
+    scale: 1,
+  },
+  bounce: {
+    y: [0, -20, 0],
+    transition: {
+      duration: 0.8,
+      ease: 'easeInOut',
+      times: [0, 0.5, 1],
+      repeat: Infinity,
+    },
+  },
+};
 
 const About: NextPage = () => {
   return (
@@ -26,7 +43,12 @@ const About: NextPage = () => {
           of millions.
         </p>
 
-        <p className="mt-8 text-lg leading-7">Happy coding ❤️</p>
+        <div className="flex items-center mt-8 space-x-3">
+          <p className="text-lg leading-7">Happy coding</p>
+          <motion.span className="block" initial="start" animate="bounce" variants={heartVariants}>
+            ❤️
+          </motion.span>
+        </div>
       </section>
     </>
   );

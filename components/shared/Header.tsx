@@ -8,6 +8,7 @@ import { CiDark, CiLight } from 'react-icons/ci';
 import React, { useEffect, useRef, useState } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import { Loading } from './Loading';
+import { motion } from 'framer-motion';
 
 const dropdownItems = [
   {
@@ -23,6 +24,19 @@ const dropdownItems = [
     href: '/readinglist',
   },
 ];
+
+const headerVariants = {
+  initial: {
+    translateY: '-100%',
+  },
+  animate: {
+    translateY: '0%',
+    transition: {
+      duration: 0.2,
+      ease: 'easeOut',
+    },
+  },
+};
 
 const Header = () => {
   const user = useUser();
@@ -55,7 +69,11 @@ const Header = () => {
   useOnClickOutside(dropDownRef, () => setIsDropDownVisible(false), 'mouseup');
 
   return (
-    <header className="flex justify-between px-2 md:mb-4 sticky top-0 shadow-md z-20 text-black dark:text-white  bg-gray-100 dark:bg-slate-800">
+    <motion.header
+      animate={headerVariants.animate}
+      initial={headerVariants.initial}
+      className="flex justify-between px-2 md:mb-4 sticky top-0 shadow-md z-20 text-black dark:text-white  bg-gray-100 dark:bg-slate-800"
+    >
       <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-5">
           <Link href="/">
@@ -164,7 +182,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 };
 

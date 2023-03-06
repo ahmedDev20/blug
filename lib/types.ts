@@ -33,6 +33,7 @@ export interface ITag {
   id: number;
   name: string;
   description: string;
+  color: string;
 }
 
 export interface ILike {

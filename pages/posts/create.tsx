@@ -1,6 +1,6 @@
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import toast from 'react-hot-toast';
 import supabase, { COVERS_BUCKET_ID } from '../../lib/supabase';
@@ -253,7 +253,7 @@ const Create: NextPage<Props> = ({ tags }) => {
                     className="hover:bg-gray-100 p-2 transition-all ease-in-out cursor-pointer dark:hover:text-slate-900"
                     onClick={() => onAddTag(tag)}
                   >
-                    <h4 className="hover:text-purple-600">#{tag.name}</h4>
+                    <h4 style={{ color: tag.color }}>#{tag.name}</h4>
                     <p className="max-h-10 overflow-hidden whitespace-nowrap text-ellipsis">{tag.description}</p>
                   </li>
                 ))}
