@@ -17,7 +17,7 @@ export default function Dashboard({ posts, comments }: Props) {
         <title>Dashboard - Blug</title>
       </Head>
 
-      <main className="max-w-7xl mx-auto px-2 pd:p-0 mt-4">
+      <main className="max-w-7xl mx-auto px-2 md:p-0 mt-4">
         <section className="mt-5">
           <h1 className="text-3xl font-bold">Stats</h1>
           <div className="flex items-center justify-between w-full mt-4 gap-2">
@@ -37,7 +37,7 @@ export default function Dashboard({ posts, comments }: Props) {
           <h1 className="text-3xl font-bold">My posts</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mt-4">
             {posts.length > 0 ? (
-              posts?.map(post => <PostPreview canBeDeleted={true} key={post.id} post={post} />)
+              posts?.map(post => <PostPreview canBeDeleted canBeEdited key={post.id} post={post} />)
             ) : (
               <p>You have no posts, go and create one.</p>
             )}

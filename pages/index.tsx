@@ -65,8 +65,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     tags: post.tags.map((e: any) => e.tags),
   }));
 
-  console.log(posts[0].tags[0]);
-
   return {
     props: {
       posts,

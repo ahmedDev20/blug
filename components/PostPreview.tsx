@@ -5,18 +5,18 @@ import Image from 'next/image';
 import { useState } from 'react';
 import supabase from '../lib/supabase';
 import toast from 'react-hot-toast';
-import { IoMdTrash } from 'react-icons/io';
+import { IoMdCreate, IoMdTrash } from 'react-icons/io';
 import { Dialog } from './shared/Dialog';
 import { useRouter } from 'next/router';
 
 interface Props {
   post: IPost;
   canBeDeleted?: boolean;
+  canBeEdited?: boolean;
 }
 
-export const PostPreview = ({ post, canBeDeleted }: Props) => {
+export const PostPreview = ({ post, canBeDeleted, canBeEdited }: Props) => {
   const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -33,6 +33,14 @@ export const PostPreview = ({ post, canBeDeleted }: Props) => {
   return (
     <>
       <div className="rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md relative">
+        {canBeEdited && (
+          <Link href={`/posts/${post.slug}/edit`}>
+            <button className="absolute top-2 right-14 z-10 p-2 rounded-md bg-green-500 hover:bg-green-800 transition-colors duration-200 ease-in-out">
+              <IoMdCreate className="text-xl text-white" />
+            </button>
+          </Link>
+        )}
+
         {canBeDeleted && (
           <button
             className="absolute top-2 right-2 z-10 p-2 rounded-md bg-red-500 hover:bg-red-800 transition-colors duration-200 ease-in-out"

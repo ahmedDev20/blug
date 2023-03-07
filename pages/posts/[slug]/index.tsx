@@ -2,14 +2,14 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-import { IComment, IPost } from '../../lib/types';
-import supabase from '../../lib/supabase';
-import Post from '../../components/Post';
+import { IComment, IPost } from '@/lib/types';
+import supabase from '@/lib/supabase';
+import Post from '@/components/Post';
 import ScrollToTop from 'react-scroll-to-top';
 import { FaLongArrowAltUp } from 'react-icons/fa';
-import Reactions from '../../components/Reactions';
+import Reactions from '@/components/Reactions';
 
-const Comments = dynamic(() => import('../../components/Comments'));
+const Comments = dynamic(() => import('@/components/Comments'));
 
 interface Props {
   post: IPost;

@@ -1,39 +1,40 @@
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import { ChangeEvent, FormEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import toast from 'react-hot-toast';
-import supabase, { COVERS_BUCKET_ID } from '../../lib/supabase';
+import supabase, { COVERS_BUCKET_ID } from '@/lib/supabase';
 import Image from 'next/image';
 import Head from 'next/head';
 import { GetServerSideProps, NextPage } from 'next';
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
-import { Loading } from '../../components/shared/Loading';
-import { ITag } from '../../lib/types';
+import { Loading } from '@/components/shared/Loading';
+import { IPost, ITag } from '@/lib/types';
 import { IoIosClose } from 'react-icons/io';
 import { useOnClickOutside } from 'usehooks-ts';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false, loading: () => <Loading label="Loading editor..." color="purple" /> });
 
 interface Props {
-  tags: [ITag];
+  post: IPost;
+  tags: ITag[];
 }
 
-const Create: NextPage<Props> = ({ tags }) => {
+const Edit: NextPage<Props> = ({ post, tags }) => {
   const { session } = useSessionContext();
   const router = useRouter();
-  const [title, setTitle] = useState<string>('');
-  const [markdown, setMarkdown] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string>(post.title);
+  const [markdown, setMarkdown] = useState<string | undefined>(post.markdown);
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [coverName, setCoverName] = useState<string>('');
-  const [coverUrl, setCoverUrl] = useState<string | undefined>('');
+  const [coverUrl, setCoverUrl] = useState<string | undefined>(post.coverUrl);
   const [isCoverUploading, setIsCoverUploading] = useState<boolean>(false);
-  const [isPublishing, setIsPublishing] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tagSearch, setTagSearch] = useState<string>('');
   const [tagsOpen, setTagsOpen] = useState<boolean>(false);
-  const [selectedTags, setSelectedTags] = useState<ITag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<ITag[]>(post.tags);
   const [initialTags, setInitialTags] = useState<ITag[] | []>(tags);
   const tagInputRef = useRef<HTMLInputElement | null>(null);
   const tagsListRef = useRef<HTMLUListElement | null>(null);
@@ -85,7 +86,7 @@ const Create: NextPage<Props> = ({ tags }) => {
     setCoverName('');
   };
 
-  const onPublish = async (event: FormEvent) => {
+  const onEdit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!coverUrl) return toast.error('Please choose a cover.');
@@ -96,39 +97,42 @@ const Create: NextPage<Props> = ({ tags }) => {
     try {
       const slug = title?.trim().toLowerCase().replace(/\s+/g, '-').replace('?', '').concat(`-${Date.now()}`);
 
-      setIsPublishing(true);
+      setIsEditing(true);
 
       const { error: err1, data } = await supabase
         .from('posts')
-        .insert({
+        .update({
           title,
           slug,
           author_id: session?.user?.id,
           markdown,
           coverUrl,
         })
+        .match({ id: post.id })
         .select();
-
       if (err1) throw err1;
 
       const id_post = data[0].id;
 
-      const { error: err2 } = await supabase.from('posts_tags').insert(
+      // update the post tags also
+      const { error: err2 } = await supabase.from('posts_tags').delete().match({ id_post });
+      if (err2) throw err2;
+
+      const { error: err3 } = await supabase.from('posts_tags').insert(
         selectedTags.map(t => ({
           id_post,
           id_tag: t.id,
         })),
       );
+      if (err3) throw err3;
 
-      if (err2) throw err2;
-
-      toast.success('Post created!');
+      toast.success('Post updated!');
 
       router.push(`/posts/${slug}`);
     } catch (error) {
       toast.error('Sorry, something happend.');
     } finally {
-      setIsPublishing(false);
+      setIsEditing(false);
     }
   };
 
@@ -168,13 +172,13 @@ const Create: NextPage<Props> = ({ tags }) => {
   return (
     <>
       <Head>
-        <title>New post - Blug</title>
+        <title>Edit post - Blug</title>
       </Head>
 
       <section className="max-w-7xl mx-auto px-2 md:px-0">
-        <h1 className="text-3xl font-bold">Create a new post</h1>
+        <h1 className="text-3xl font-bold">Edit your post</h1>
 
-        <form onSubmit={onPublish} className="border rounded-lg px-4 md:px-12 py-8 mt-4 bg-white dark:bg-transparent">
+        <form onSubmit={onEdit} className="border rounded-lg px-4 md:px-12 py-8 mt-4 bg-white dark:bg-transparent">
           <div className="flex space-x-3 mb-3">
             {isCoverUploading && <Loading label="Uploading..." color="rebeccapurple" />}
 
@@ -225,7 +229,7 @@ const Create: NextPage<Props> = ({ tags }) => {
               <div className="flex">
                 {selectedTags &&
                   selectedTags.map(tag => (
-                    <span key={tag.id} style={{ backgroundColor: tag.color }} className="px-2 py-1 flex items-center rounded-md text-white mr-2">
+                    <span style={{ backgroundColor: tag.color }} key={tag.id} className="px-2 py-1 flex items-center rounded-md text-white mr-2">
                       #{tag.name} <IoIosClose className="text-2xl hover:text-red-600 hover:cursor-pointer" onClick={() => onRemoveTag(tag)} />
                     </span>
                   ))}
@@ -263,8 +267,8 @@ const Create: NextPage<Props> = ({ tags }) => {
 
           <MDEditor value={markdown} autoFocus height={400} visibleDragbar={false} onChange={val => setMarkdown(val)} />
 
-          <button disabled={isPublishing} className="bg-purple-600 px-4 py-2 mt-4 rounded-md text-white">
-            {isPublishing ? <Loading label="Publishing..." /> : 'Publish'}
+          <button disabled={isEditing} className="bg-purple-600 px-4 py-2 mt-4 rounded-md text-white">
+            {isEditing ? <Loading label="Editing..." /> : 'Edit'}
           </button>
         </form>
       </section>
@@ -272,15 +276,21 @@ const Create: NextPage<Props> = ({ tags }) => {
   );
 };
 
-export default Create;
+export default Edit;
 
 export const getServerSideProps: GetServerSideProps = withPageAuth({
   redirectTo: '/login',
-  getServerSideProps: async _ => {
+  getServerSideProps: async ({ params }) => {
+    const { data: post, error } = await supabase.from('posts').select('*, tags:posts_tags(tags(*))').eq('slug', params?.slug).limit(1).single();
+    if (error) return { notFound: true };
+
     const { data: tags } = await supabase.from('tags').select();
+
+    post.tags = post.tags.map((t: any) => t.tags);
 
     return {
       props: {
+        post,
         tags,
       },
     };
