@@ -100,7 +100,7 @@ export default function Reactions({ postId }: Props) {
   };
 
   return (
-    <div className="fixed z-10 bg-slate-800 md:bg-transparent shadow-md left-0 bottom-0 w-full md:w-fit p-4 flex px-4 gap-8 justify-evenly md:h-1/4 md:relative md:flex-col">
+    <div className="fixed z-10 bg-gray-200 dark:bg-slate-900 dark:md:bg-transparent md:bg-transparent md:shadow-none shadow-xl left-0 bottom-0 w-full md:w-fit p-4 flex px-4 gap-8 justify-evenly md:h-1/4 md:relative md:flex-col">
       <button className="flex space-x-2 items-center cursor-default md:flex-col md:space-x-0">
         {liked ? (
           <IoMdHeart onClick={onPostDislike} data-tip="Dislike" className="text-4xl text-red-500 focus:outline-none hover:cursor-pointer" />
