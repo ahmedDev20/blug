@@ -8,7 +8,7 @@ import { PostPreview } from '../components/PostPreview';
 import { useTheme } from 'next-themes';
 
 interface Props {
-  posts: [IPost];
+  posts: IPost[];
 }
 
 const Home: NextPage<Props> = ({ posts }) => {
@@ -18,7 +18,6 @@ const Home: NextPage<Props> = ({ posts }) => {
     <>
       <Head>
         <title>Blug</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <section className="max-w-7xl mx-auto px-2 md:px-0 dark:bg-slate-900">

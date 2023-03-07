@@ -24,6 +24,9 @@ const PostPage: NextPage<Props> = ({ post }) => {
     <>
       <Head>
         <title>{title}</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:image" content={post.coverUrl} />
       </Head>
 
       <section className="max-w-4xl mx-auto md:flex">
