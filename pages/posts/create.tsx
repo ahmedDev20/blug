@@ -37,6 +37,7 @@ const Create: NextPage<Props> = ({ tags }) => {
   const [initialTags, setInitialTags] = useState<ITag[] | []>(tags);
   const tagInputRef = useRef<HTMLInputElement | null>(null);
   const tagsListRef = useRef<HTMLUListElement | null>(null);
+
   useOnClickOutside(tagsListRef, () => setTagsOpen(false));
 
   const onTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -172,7 +173,7 @@ const Create: NextPage<Props> = ({ tags }) => {
       </Head>
 
       <section className="max-w-7xl mx-auto px-2 md:px-0">
-        <h1 className="text-3xl font-bold">Create a new post</h1>
+        <h1 className="text-4xl font-bold">Create a new post</h1>
 
         <form onSubmit={onPublish} className="border rounded-lg px-4 md:px-12 py-8 mt-4 bg-white dark:bg-transparent">
           <div className="flex space-x-3 mb-3">

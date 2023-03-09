@@ -8,14 +8,26 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Tag } from './Tag';
 import { formatDate } from '@/lib/date-formatter';
+import { useUser } from '@supabase/auth-helpers-react';
+import { IoMdCreate } from 'react-icons/io';
 
 interface Props {
   post: IPost;
 }
 
 const Post: FC<Props> = ({ post }) => {
+  const user = useUser();
+
   return (
-    <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md">
+    <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md relative">
+      {user?.id === post.author.id && (
+        <Link href={`/posts/${post.slug}/edit`}>
+          <button className="absolute top-2 right-4 z-10 p-2 rounded-md bg-green-600 hover:bg-green-800 transition-colors duration-200 ease-in-out">
+            <IoMdCreate className="text-xl text-white" />
+          </button>
+        </Link>
+      )}
+
       <Image width={1000} height={500} className="object-cover w-full bg-white" src={post.coverUrl} alt={post.slug} />
 
       <article className="px-2 md:px-5 py-3 pb-4">

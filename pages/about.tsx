@@ -8,7 +8,7 @@ const heartVariants = {
     scale: 1,
   },
   bounce: {
-    y: [0, -20, 0],
+    y: [0, -15, 0],
     transition: {
       duration: 0.8,
       ease: 'easeInOut',
@@ -43,7 +43,7 @@ const About: NextPage = () => {
           of millions.
         </p>
 
-        <div className="flex items-center mt-8 space-x-3">
+        <div className="flex items-center mt-8 space-x-2">
           <p className="text-lg leading-7">Happy coding</p>
           <motion.span className="block" initial="start" animate="bounce" variants={heartVariants}>
             ❤️

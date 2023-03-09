@@ -23,7 +23,7 @@ const Home: NextPage<Props> = ({ posts }) => {
       <section className="max-w-7xl mx-auto px-2 md:px-0 dark:bg-slate-900">
         <div className="flex justify-between">
           <div className="space-y-5">
-            <h1 className="text-6xl max-w-xl font-serif leading-tight">
+            <h1 className="md:text-6xl text-5xl max-w-xl font-serif leading-tight">
               <span className="underline decoration-black decoration-4 dark:decoration-white">Blug</span> is a place to write, read and connect.
             </h1>
             <h2>It&apos;s easy and free to post your thinking on any topic and connect with millions of readers.</h2>

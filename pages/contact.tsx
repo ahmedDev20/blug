@@ -16,25 +16,24 @@ const Contact: NextPage = () => {
         <p className="mt-4 text-lg leading-7">
           Email:{' '}
           <a href="#" className="underline">
-            contact@blug.dev
+            contact@blug.vercel.app
           </a>{' '}
           😁
         </p>
         <p className="mt-4 text-lg leading-7">
           Twitter:{' '}
           <a href="#" className="underline">
-            @blugdotdev
+            @blugdotverceldotdev
           </a>{' '}
           👻
         </p>
         <p className="mt-4 text-lg leading-7">
           Report a vulnerability:{' '}
           <a href="#" className="underline">
-            blug.dev/security
+            blug.vercel.app/security
           </a>{' '}
           🐛 To report a bug, please create a bug report in our open source repository.
         </p>
-        <p className="mt-4 text-lg leading-7">To request a feature, please start a new GitHub Discussion in the Forem repo!</p>
       </section>
     </>
   );
