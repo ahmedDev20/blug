@@ -22,7 +22,7 @@ const Post: FC<Props> = ({ post }) => {
     <div className="flex-2 rounded-none md:rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800 shadow-md relative">
       {user?.id === post.author.id && (
         <Link href={`/posts/${post.slug}/edit`}>
-          <button className="absolute top-2 right-4 z-10 p-2 rounded-md bg-green-600 hover:bg-green-800 transition-colors duration-200 ease-in-out">
+          <button className="absolute top-2 right-2 z-10 p-2 rounded-md bg-green-600 hover:bg-green-800 transition-colors duration-200 ease-in-out">
             <IoMdCreate className="text-xl text-white" />
           </button>
         </Link>

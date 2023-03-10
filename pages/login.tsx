@@ -25,7 +25,7 @@ const Login: NextPage = () => {
       <section className="max-w-xl flex flex-col border p-5 m-5 md:mx-auto rounded-lg bg-white dark:bg-transparent">
         <h3 className="text-2xl text-center font-serif">Welcome back.</h3>
 
-        <Auth theme="dark" onlyThirdPartyProviders supabaseClient={supabaseClient} appearance={{ theme: ThemeSupa }} providers={['github', 'twitter']} />
+        <Auth theme="dark" onlyThirdPartyProviders supabaseClient={supabaseClient} appearance={{ theme: ThemeSupa }} providers={['github', 'google']} />
       </section>
     </>
   );

@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 .container {
-    min-height: calc(100vh - theme('height.48'));
     margin: 0 auto;
 }
