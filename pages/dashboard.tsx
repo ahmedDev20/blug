@@ -3,7 +3,6 @@ import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 import { GetServerSideProps } from 'next';
 import { PostPreview } from '../components/PostPreview';
 import { IComment, IPost } from '../lib/types';
-import { useRouter } from 'next/router';
 
 interface Props {
   posts: [IPost];
@@ -61,7 +60,10 @@ export const getServerSideProps: GetServerSideProps = withPageAuth({
         .eq('author_id', userData.user?.id);
       if (postsErr) throw postsErr;
 
-      const { data: comments, error: commentsErr } = await supabaseClient.from('comments').select('*').eq('author_id', userData?.user?.id);
+      const { data: comments, error: commentsErr } = await supabaseClient
+        .from('comments')
+        .select('*')
+        .eq('author_id', userData?.user?.id);
       if (commentsErr) throw commentsErr;
 
       const posts = data?.map(post => ({ ...post, tags: post.tags.map((tag: any) => tag.tags) }));
